@@ -14,14 +14,14 @@ export default function App() {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Dystans (km)"
+        placeholder="Dystans w km"
         keyboardType="numeric"
         value={distance}
         onChangeText={setDistance}
       />
       <TextInput
         style={styles.input}
-        placeholder="Zużyte paliwo (litry)"
+        placeholder="Zużyte paliwo w litrach"
         keyboardType="numeric"
         value={fuelUsed}
         onChangeText={setFuelUsed}
