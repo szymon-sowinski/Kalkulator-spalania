@@ -1,15 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { db } from './firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { useState } from 'react';
-
 
 export default function App() {
   const [distance, setDistance] = useState('');
   const [fuelUsed, setFuelUsed] = useState('');
   const [result, setResult] = useState(null);
-
 
   const handleSubmit = async () => {
     const distanceNum = parseFloat(distance);
@@ -30,7 +28,7 @@ export default function App() {
         createdAt: new Date()
       });
 
-      setResult(fuelConsumptionPer100km.toFixed(2));
+      setResult(fuelConsumptionPer100km.toFixed(2)); 
       setDistance('');
       setFuelUsed('');
     } catch (error) {
@@ -41,31 +39,30 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>Oblicz spalanie</Text>
       <TextInput
         style={styles.input}
-        placeholder="Dystans w km"
+        placeholder="Dystans (km)"
         keyboardType="numeric"
         value={distance}
         onChangeText={setDistance}
       />
       <TextInput
         style={styles.input}
-        placeholder="Zużyte paliwo w litrach"
+        placeholder="Zużyte paliwo (litry)"
         keyboardType="numeric"
         value={fuelUsed}
         onChangeText={setFuelUsed}
       />
-      <Button
-        title="Oblicz spalanie"
-        onPress={handleSubmit}
-      />
-
+      <Button title="Oblicz i zapisz" onPress={handleSubmit} />
+      
       {result !== null && (
         <Text style={styles.resultText}>
           Twoje spalanie: {result} l/100km
         </Text>
       )}
-
+      
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -76,6 +73,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
   },
   input: {
     width: '100%',
@@ -91,5 +94,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'green',
-  },  
+  },
 });
