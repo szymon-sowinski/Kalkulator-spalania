@@ -8,6 +8,7 @@ import { useState } from 'react';
 export default function App() {
   const [distance, setDistance] = useState('');
   const [fuelUsed, setFuelUsed] = useState('');
+  const [result, setResult] = useState(null);
 
 
   const handleSubmit = async () => {
@@ -29,6 +30,7 @@ export default function App() {
         createdAt: new Date()
       });
 
+      setResult(fuelConsumptionPer100km.toFixed(2));
       setDistance('');
       setFuelUsed('');
     } catch (error) {
@@ -57,6 +59,13 @@ export default function App() {
         title="Oblicz spalanie"
         onPress={handleSubmit}
       />
+
+      {result !== null && (
+        <Text style={styles.resultText}>
+          Twoje spalanie: {result} l/100km
+        </Text>
+      )}
+
     </View>
   );
 }
@@ -77,4 +86,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
+  resultText: {
+    marginTop: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'green',
+  },  
 });
